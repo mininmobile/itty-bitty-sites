@@ -1,0 +1,30 @@
+<meta charset="utf-8"><meta name="viewport" content="width=device-width"><base target="_top"><style type="text/css">body{margin:0 auto;padding:12vmin 10vmin;max-width:35em;line-height:1.5em;font-family: -apple-system,BlinkMacSystemFont,sans-serif;word-wrap: break-word;}</style> <style type="text/css">body, a {background-color:#111122; color:#EEDDFF !important;}</style>
+
+<h1>teeny tools</h1>
+<p>a collection of fast and tiny tools built for the web</p>
+
+<ul id="list">
+ <li>fetching...</li>
+</ul>
+
+<script>
+let list = document.getElementById("list");
+
+let http = new XMLHttpRequest();
+http.open("GET", "https://api.jsonbin.io/b/5d4059abea04da211dc51a8a", true);
+http.send();
+
+http.onload = (e) => {
+	if (http.status == 200) {
+		list.innerHTML = "";
+
+		JSON.parse(http.response).forEach((tool) => {
+			list.innerHTML += `<li><a href="${tool.url}">${tool.name}</a></li>\n`;
+		});
+	} else {
+		console.error(http.response);
+
+		list.innerHTML = "<li>error fetching tools, see javascript console</li>";
+	}
+}
+</script>
